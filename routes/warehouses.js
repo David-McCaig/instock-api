@@ -1,29 +1,29 @@
 require("dotenv").config();
-const { PORT } = process.env;
-const knex = require('knex')(require('../knexfile'));
+// const knex = require("knex")(require("../knexfile"));
 const express = require("express");
 const router = express.Router();
 const uuid = require("uuid");
 
+const knex = require("knex");
+const knexConfig = require("../knexfile");
+const db = knex(knexConfig);
 
-
-const getWarehouseList = (warehouseId) => {
-  //
-}
-
-const getInventoryList = (warehouseId) => {
-  //
-};
+// const warehouseController = require('../controllers/warehouseController');
 
 router.get("/:id/inventories", (req, res) => {
-  console.log(req.params.id);
-
-
-
-  //Return 404 if warehouse ID not found
-  //return 200 if successful with data
-
-  return res.status(200).json({message: 'Retrieved warehouse inventory!'})
+  // Fetch inventory data and return
+  db("inventories")
+    .where({
+      warehouse_id: req.params.id,
+    })
+    .select("*")
+    .then((data) => {
+      if (!data[0]) res.status(500).json({message:"No"});
+      else res.status(200).json(data);
+    })
+    .catch((err) => {
+      res.status(500).send("Error getting warehouses");
+    });
 });
 
 module.exports = router;
