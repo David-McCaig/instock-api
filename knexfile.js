@@ -1,4 +1,10 @@
-// Update with your config settings.
+require('dotenv').config();
+
+const {
+  USER,
+  PASSWORD,
+  DATABASE
+} = process.env;
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
@@ -8,11 +14,11 @@ module.exports = {
   client: "mysql",
 
   connection: {
-    host: "127.0.0.1",
-    user: "root",
-    password: "rootroot",
-    database: "instock",
+    host: '127.0.0.1',
+    user: USER,
+    password: PASSWORD,
+    database: DATABASE,
     charset: "utf8"
-  }
+}
 
 };
