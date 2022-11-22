@@ -1,5 +1,10 @@
 require('dotenv').config();
-// Update with your config settings.
+
+const {
+  USER,
+  PASSWORD,
+  DATABASE
+} = process.env;
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
@@ -8,8 +13,10 @@ module.exports = {
   client: 'mysql',
   connection: {
     host: '127.0.0.1',
-    database: process.env.DB_LOCAL_DBNAME,
-    user: process.env.DB_LOCAL_USER,
-    password: process.env.DB_LOCAL_PASSWORD,
-  },
+    user: USER,
+    password: PASSWORD,
+    database: DATABASE,
+    charset: "utf8"
+}
+
 };
