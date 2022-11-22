@@ -1,23 +1,28 @@
-const { default: knex } = require('knex');
-const knexConfig = require('../knexfile');
-const db = require('knex')(knexConfig);
+const knexConfig = require("../knexfile");
+const db = require("knex")(knexConfig);
 
 const getAllWarehouses = async (_req, res) => {
-  const warehouseData = await db('warehouses');
+  const warehouseData = await db("warehouses");
   res.status(200).json(warehouseData);
 };
 
 const getWarehouseInventories = (req, res) => {
-    knex('inventory')
-    .where({warehouse_id: requestAnimationFrame.params.id})
-    .then(data => {
-        res.status(200).json(data);
+  db("inventories")
+    .where({
+      warehouse_id: req.params.id,
     })
-    .catch(err => {
-        res.status(400).send('Error');
+    .select("*")
+    .then((data) => {
+      if (!data.length)
+        res.status(404).json({ message: "Warehouse not found!" });
+      else res.status(200).json(data);
     })
-}
-  
-  module.exports = {
-    getAllWarehouses, getWarehouseInventories
-  }
+    .catch(() => {
+      res.status(500).send("Error getting warehouses");
+    });
+};
+
+module.exports = {
+  getAllWarehouses,
+  getWarehouseInventories,
+};
