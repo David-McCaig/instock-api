@@ -5,7 +5,7 @@ const {
   DB_LOCAL_USER,
   DB_LOCAL_PASSWORD
 } = process.env;
-
+console.log(DB_LOCAL_USER+" "+DB_LOCAL_PASSWORD+" "+DB_LOCAL_DBNAME)
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
