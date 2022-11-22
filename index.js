@@ -10,7 +10,7 @@ const cors = require('cors');
 
 app.use(cors());
 
-app.use('/api/warehouses', warehouseRouter);
+app.use('/warehouses', warehouseRouter);
 
 app.listen(PORT, () => {
     console.log(`Application running on ${PORT}`);
