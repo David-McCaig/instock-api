@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const PORT = 8000;
+
 const warehouseRouter = require('./routes/warehouseRouter.js');
 
 const express = require('express');
