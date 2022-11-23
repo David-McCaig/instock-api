@@ -51,7 +51,6 @@ const deleteWarehouse = async (req, res) => {
     if (!foundWarehouse.length) {
       return res.status(404).json({ message: "Warehouse doesn't exist!" });
     }
-    console.log(foundWarehouse[0].id)
 
     await db('warehouses').where({
         id: foundWarehouse[0].id
