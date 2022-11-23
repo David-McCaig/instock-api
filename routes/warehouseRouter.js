@@ -1,7 +1,13 @@
-const router = require('express').Router();
-const warehouseController = require('../controllers/warehouseController');
+require("dotenv").config();
 
-router.get('/', warehouseController.getAllWarehouses);
+const express = require("express");
+const router = express.Router();
+
+const warehouseController = require("../controllers/warehouseController");
+
+router.get("/", warehouseController.getAllWarehouses);
+
+router.get("/:id/inventories", warehouseController.getWarehouseInventories);
 
 router.get('/:userId', warehouseController.getWarehouseById);
 
