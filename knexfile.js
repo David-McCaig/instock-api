@@ -19,6 +19,5 @@ module.exports = {
     password: DB_LOCAL_PASSWORD,
     database: DB_LOCAL_DBNAME,
     charset: "utf8",
-  },
-  // },
+  }
 };
