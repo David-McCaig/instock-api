@@ -10,7 +10,7 @@ router.get("/", warehouseController.getAllWarehouses);
 router.get("/:id/inventories", warehouseController.getWarehouseInventories);
 
 router
-  .route("/:userId")
+  .route("/:id")
   .get(warehouseController.getWarehouseById)
   .delete(warehouseController.deleteWarehouse);
 
