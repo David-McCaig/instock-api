@@ -11,7 +11,7 @@ const addInventoryItem = async (req, res) => {
     !req.body.description ||
     !req.body.category ||
     !req.body.status ||
-    !req.body.quantity
+    req.body.quantity < 0
   ) {
     return res.status(400).json({
       message:
