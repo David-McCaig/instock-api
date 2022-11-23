@@ -6,12 +6,22 @@ const getAllWarehouses = async (_req, res) => {
   res.status(200).json(warehouseData);
 };
 
+const getWarehouseById = async (req, res) => {
+    try{
+      const userData = await db('warehouses')
+      .where({ id: req.params.userId })
+      res.status(200).json(userData[0]);
+      
+    }
+    catch (error){
+      res.status(500).json({error:error})
+    }
+  }
+
 const getWarehouseInventories = async (req, res) => {
   try {
     //Check if warehouse is in table
     const foundWarehouse = await db("warehouses")
-      .select("*")
-      .from("warehouses")
       .where({ id: req.params.id });
     //Return 404 status code if warehouse not found
     if (!foundWarehouse.length) {
@@ -39,5 +49,6 @@ const getWarehouseInventories = async (req, res) => {
 
 module.exports = {
   getAllWarehouses,
-  getWarehouseInventories,
+  getWarehouseById,
+  getWarehouseInventories
 };

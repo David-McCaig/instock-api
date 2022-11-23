@@ -9,4 +9,6 @@ router.get("/", warehouseController.getAllWarehouses);
 
 router.get("/:id/inventories", warehouseController.getWarehouseInventories);
 
+router.get('/:userId', warehouseController.getWarehouseById);
+
 module.exports = router;

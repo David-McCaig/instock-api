@@ -6,7 +6,6 @@ const {
   DB_LOCAL_PASSWORD,
   DB_LOCAL_DBNAME
 } = process.env;
-
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
