@@ -1,4 +1,4 @@
-const PORT = 8080;
+const PORT = 8000;
 
 const warehouseRouter = require('./routes/warehouseRouter.js');
 
