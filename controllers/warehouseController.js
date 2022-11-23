@@ -8,8 +8,8 @@ const getAllWarehouses = async (_req, res) => {
 
 const getWarehouseById = async (req, res) => {
   try {
-    const userData = await db("warehouses").where({ id: req.params.userId });
-    res.status(200).json(userData[0]);
+    const warehouseData = await db("warehouses").where({ id: req.params.id });
+    res.status(200).json(warehouseData[0]);
   } catch (error) {
     res.status(500).json({ error: error });
   }
@@ -46,14 +46,14 @@ const getWarehouseInventories = async (req, res) => {
 const deleteWarehouse = async (req, res) => {
   try {
     const foundWarehouse = await db("warehouses").where({
-      id: req.params.userId,
+      id: req.params.id,
     });
     if (!foundWarehouse.length) {
       return res.status(404).json({ message: "Warehouse doesn't exist!" });
     }
     console.log(foundWarehouse[0].id)
 
-    const deletedWarehouse = await db('warehouses').where({
+    await db('warehouses').where({
         id: foundWarehouse[0].id
     }).del();
     res.sendStatus(204);
