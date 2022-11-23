@@ -1,6 +1,5 @@
 require('dotenv').config();
-
-const PORT = 8000;
+const PORT = process.env.DB_LOCAL_PORT || 8080;
 
 const warehouseRouter = require('./routes/warehouseRouter.js');
 
