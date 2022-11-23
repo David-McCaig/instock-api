@@ -18,6 +18,8 @@ const getWarehouseById = async (req, res) => {
   }
 }
 
+
+
   module.exports = {
     getAllWarehouses,
     getWarehouseById
