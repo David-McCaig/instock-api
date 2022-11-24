@@ -2,6 +2,11 @@ const knexConfig = require("../knexfile");
 const db = require("knex")(knexConfig);
 const uuid = require("uuid");
 
+const getAllInventory = async (_req, res) => {
+  const inventoryData = await db("inventories");
+  res.status(200).json(inventoryData);
+};
+
 const addInventoryItem = async (req, res) => {
   console.log(req.body);
   //Validate request body input fields
@@ -69,4 +74,7 @@ const addInventoryItem = async (req, res) => {
   }
 };
 
-module.exports = { addInventoryItem };
+module.exports = { 
+  getAllInventory,
+  addInventoryItem
+};
