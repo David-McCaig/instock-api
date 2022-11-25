@@ -12,6 +12,7 @@ router.post("/", inventoryController.addInventoryItem);
 router
   .route("/:id")
   .get(inventoryController.getinventoriesById)
-  .put(inventoryController.editInventory);
+  .put(inventoryController.editInventory)
+  .delete(inventoryController.deleteInventory);
 
 module.exports = router;
