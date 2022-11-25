@@ -100,9 +100,29 @@ const getinventoriesById = async (req, res) => {
   }
 };
 
+const deleteInventory = async (req, res) => {
+  try {
+    const foundInventory = await db("inventories").where({
+      id: req.params.id,
+    });
+    if (!foundInventory.length) {
+      return res.status(404).json({ message: "Inventory item doesn't exist!" });
+    }
+
+    await db('inventories').where({
+        id: foundInventory[0].id
+    }).del();
+    res.sendStatus(204);
+
+  } catch {
+    res.status(500).json({ error: error });
+  }
+};
+
 module.exports = { 
   getAllInventory,
   addInventoryItem,
   editInventory,
-  getinventoriesById
+  getinventoriesById,
+  deleteInventory
 };
