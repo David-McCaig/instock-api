@@ -3,8 +3,14 @@ const db = require("knex")(knexConfig);
 const uuid = require("uuid");
 
 const getAllInventory = async (_req, res) => {
-  const inventoryData = await db("inventories");
-  res.status(200).json(inventoryData);
+  try {
+    const inventoryData = await db("inventories")
+    .select('inventories.id', 'warehouse_name', 'item_name', 'description', 'category', 'status', 'quantity')
+    .join('warehouses', {'inventories.warehouse_id': 'warehouses.id'});
+    res.status(200).json(inventoryData);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
 };
 
 const addInventoryItem = async (req, res) => {
