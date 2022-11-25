@@ -9,6 +9,9 @@ router.get("/", inventoryController.getAllInventory);
 
 router.post("/", inventoryController.addInventoryItem);
 
-router.put("/:id", inventoryController.editInventory)
+router
+  .route("/:id")
+  .get(inventoryController.getinventoriesById)
+  .put(inventoryController.editInventory);
 
 module.exports = router;

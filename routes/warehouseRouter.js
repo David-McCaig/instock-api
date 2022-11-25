@@ -15,5 +15,5 @@ router
   .route("/:id")
   .get(warehouseController.getWarehouseById)
   .delete(warehouseController.deleteWarehouse);
-
+  
 module.exports = router;

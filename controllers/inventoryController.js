@@ -76,8 +76,25 @@ const addInventoryItem = async (req, res) => {
 
 const editInventory = async (req, res) => {
   try {
-    const inventoriesData = await db("inventories").where({ id: req.params.id }).update({item_name: req.body.item_name, description: req.body.description, category: req.body.category, status: req.body.status, quantity: req.body.quantity})
+    const inventoriesData = await db("inventories")
+    .where({ id: req.params.id })
+    .update({
+      item_name: req.body.item_name, 
+      description: req.body.description, 
+      category: req.body.category, status: 
+      req.body.status, 
+      quantity: req.body.quantity})
+
     res.status(200).json(inventoriesData);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+};
+
+const getinventoriesById = async (req, res) => {
+  try {
+    const inventoriesData = await db("inventories").where({ id: req.params.id });
+    res.status(200).json(inventoriesData[0]);
   } catch (error) {
     res.status(500).json({ error: error });
   }
@@ -87,4 +104,5 @@ module.exports = {
   getAllInventory,
   addInventoryItem,
   editInventory,
+  getinventoriesById
 };
