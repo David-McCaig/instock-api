@@ -85,6 +85,7 @@ const editInventory = async (req, res) => {
     const inventoriesData = await db("inventories")
     .where({ id: req.params.id })
     .update({
+      warehouse_id: req.body.warehouse_id,
       item_name: req.body.item_name, 
       description: req.body.description, 
       category: req.body.category, status: 
