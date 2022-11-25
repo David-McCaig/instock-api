@@ -7,13 +7,13 @@ const warehouseController = require("../controllers/warehouseController");
 
 router.get("/", warehouseController.getAllWarehouses);
 
+router.post("/", warehouseController.addWarehouse);
+
 router.get("/:id/inventories", warehouseController.getWarehouseInventories);
 
 router
   .route("/:id")
   .get(warehouseController.getWarehouseById)
   .delete(warehouseController.deleteWarehouse);
-
-router.get("/:id/inventories", warehouseController.getWarehouseInventories);
-
+  
 module.exports = router;

@@ -2,6 +2,11 @@ const knexConfig = require("../knexfile");
 const db = require("knex")(knexConfig);
 const uuid = require("uuid");
 
+const getAllInventory = async (_req, res) => {
+  const inventoryData = await db("inventories");
+  res.status(200).json(inventoryData);
+};
+
 const addInventoryItem = async (req, res) => {
   console.log(req.body);
   //Validate request body input fields
@@ -69,4 +74,35 @@ const addInventoryItem = async (req, res) => {
   }
 };
 
-module.exports = { addInventoryItem };
+const editInventory = async (req, res) => {
+  try {
+    const inventoriesData = await db("inventories")
+    .where({ id: req.params.id })
+    .update({
+      item_name: req.body.item_name, 
+      description: req.body.description, 
+      category: req.body.category, status: 
+      req.body.status, 
+      quantity: req.body.quantity})
+
+    res.status(200).json(inventoriesData);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+};
+
+const getinventoriesById = async (req, res) => {
+  try {
+    const inventoriesData = await db("inventories").where({ id: req.params.id });
+    res.status(200).json(inventoriesData[0]);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+};
+
+module.exports = { 
+  getAllInventory,
+  addInventoryItem,
+  editInventory,
+  getinventoriesById
+};
