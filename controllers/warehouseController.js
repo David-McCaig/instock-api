@@ -2,11 +2,6 @@ const knexConfig = require("../knexfile");
 const db = require("knex")(knexConfig);
 const uuid = require("uuid");
 
-const validateEmail = email => RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/).test(email)
-
-const validatePhoneNumber = phone => RegExp(/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/gm).test(phone)
-
-
 
 const getAllWarehouses = async (_req, res) => {
   const warehouseData = await db("warehouses");
@@ -94,12 +89,23 @@ const getWarehouseInventories = async (req, res) => {
   }
 };
 
-const editWarehouse = async (req, res) => {
+//Email validation
+const validateEmail = email => {
+  return RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/).test(email);
+}
 
+//Phone number validation
+const validatePhoneNumber = (phone) => {
+  return RegExp(/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/gm).test(phone);
+}
+
+
+const editWarehouse = async (req, res) => {
+//Check if email or phone number is valid
   try {
-      if (!validateEmail(req.body.contact_email)) console.log('email invalid') ;
-  
-    if (!validatePhone(req.body.contact_phone)) console.log('phone invalid') ;
+    if (!validateEmail(req.body.contact_email)) throw 'email invalid';
+
+    if (!validatePhoneNumber(req.body.contact_phone)) throw 'phone invalid';
 
     const warehouseData = await db("warehouses")
       .where({ id: req.params.id })
