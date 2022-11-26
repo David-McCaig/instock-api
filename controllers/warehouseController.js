@@ -2,6 +2,12 @@ const knexConfig = require("../knexfile");
 const db = require("knex")(knexConfig);
 const uuid = require("uuid");
 
+const validateEmail = email => RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/).test(email)
+
+const validatePhoneNumber = phone => RegExp(/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/gm).test(phone)
+
+
+
 const getAllWarehouses = async (_req, res) => {
   const warehouseData = await db("warehouses");
   res.status(200).json(warehouseData);
@@ -88,6 +94,33 @@ const getWarehouseInventories = async (req, res) => {
   }
 };
 
+const editWarehouse = async (req, res) => {
+
+  try {
+      if (!validateEmail(req.body.contact_email)) console.log('email invalid') ;
+  
+    if (!validatePhone(req.body.contact_phone)) console.log('phone invalid') ;
+
+    const warehouseData = await db("warehouses")
+      .where({ id: req.params.id })
+      .update({
+        warehouse_name: req.body.warehouse_name,
+        address: req.body.address,
+        city: req.body.city,
+        country: req.body.country,
+        contact_name: req.body.contact_name,
+        contact_position: req.body.contact_position,
+        contact_phone: req.body.contact_phone,
+        contact_email: req.body.contact_email,
+      })
+    console.log('update completed')
+    res.status(200).json(warehouseData);
+  } catch (error) {
+    console.log('catch error')
+    res.status(500).json({ error });
+  }
+};
+
 const deleteWarehouse = async (req, res) => {
   try {
     const foundWarehouse = await db("warehouses").where({
@@ -98,7 +131,7 @@ const deleteWarehouse = async (req, res) => {
     }
 
     await db('warehouses').where({
-        id: foundWarehouse[0].id
+      id: foundWarehouse[0].id
     }).del();
     res.sendStatus(204);
 
@@ -112,5 +145,6 @@ module.exports = {
   getWarehouseById,
   getWarehouseInventories,
   addWarehouse,
+  editWarehouse,
   deleteWarehouse
 };
